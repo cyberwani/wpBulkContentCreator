@@ -1,29 +1,30 @@
 <?php
-/*
-Plugin Name: Bulk Content Creator
-Plugin URI: https://github.com/luk3thomas/wpBulkContentCreator 
-Description: Quickly create multiple posts, pages, or other custom post types from a single interface. Helpful for WordPress developers during the initial site setup.
-Version: 1.0.0
-Author: @luk3thomas
-Author URI: https://twitter.com/luk3thomas
-
-/** Inspired by DaganLev and the Bulk Page Creator plugin *
-
-Copyright 2012 @luk3thomas  (email : luke@vewebsites.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+/**
+ *
+ * Plugin Name: Bulk Content Creator
+ * Plugin URI: https://github.com/luk3thomas/wpBulkContentCreator 
+ * Description: Quickly create multiple posts, pages, or other custom post types from a single interface. Helpful for WordPress developers during the initial site setup.
+ * Version: 1.0.0
+ * Author: @luk3thomas
+ * Author URI: https://twitter.com/luk3thomas
+ * 
+ * Inspired by DaganLev and the Bulk Page Creator plugin 
+ * 
+ * Copyright 2012 @luk3thomas  (email : luke@vewebsites.com)
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as 
+ * published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * -------------------------------------------- */
 
 
 class VE_Content_Maker {
