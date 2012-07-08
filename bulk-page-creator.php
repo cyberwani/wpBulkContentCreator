@@ -27,9 +27,9 @@
  * -------------------------------------------- */
 
 
-class VE_Content_Maker {
+class VE_Content_Creator {
 
-  var $slug = 've_bulk_content_maker';
+  var $slug = 've_bulk_content_creator';
 
   function __construct() {
 
@@ -39,7 +39,7 @@ class VE_Content_Maker {
 
   function create_page() {
 
-    add_options_page('Bulk Content Maker' , 'Bulk Content Maker' , 'manage_options' , $this->slug , array($this, 'show_page'));
+    add_options_page('Bulk Content Creator' , 'Bulk Content Creator' , 'manage_options' , $this->slug , array($this, 'show_page'));
 
   }
 
@@ -174,4 +174,4 @@ class VE_Content_Maker {
 
 }
 
-new VE_Content_Maker();
+new VE_Content_Creator();
