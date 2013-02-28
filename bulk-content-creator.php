@@ -81,6 +81,7 @@ class VE_Content_Creator {
   function show_page() {
 
     if( isset($_POST['ve_set']) && $_POST['ve_set']=='set' ){
+      echo "<div id='message' class='updated'>";
       foreach( $_POST['ve_post'] as $new ) {
         if(! empty($new['name'])) {
           $menu_order = $new['menu_order'] ? $new['menu_order'] : 0;
@@ -102,25 +103,20 @@ class VE_Content_Creator {
           if($new_id && ! empty($new['thumbnail'])) {
             update_post_meta($new_id, '_thumbnail_id', $new['thumbnail']);
             $id = wp_update_post(array('ID' => $new['thumbnail'], 'post_parent' => $new_id), true);
-            print_r( $id );
-            if($id) {
-              echo 'true:' . $id;
-            } else {
-              echo 'false';
-              print_r( $new );
-              print_r( $new_id );
-            }
           }
 
           if($new_id) {
-            echo 'Created new ' . $new['event'] . ':' . $new['name'] . '';
+              printf(' <p> Added new %s: <a href="%s">%s</a> </p> '
+              , $new["type"]
+              , get_edit_post_link($new_id)
+              , $new["name"]
+              );
           }
 
-
         }
-        echo '<br>';
 
       }
+      echo "</div>";
       //form submitted
         }
     ?>
@@ -130,6 +126,9 @@ class VE_Content_Creator {
       }
       .ve_table td {
         vertical-align:top;
+      }
+      #message {
+        margin-left:0;
       }
     </style>
     <h1>Create Content</h2>
