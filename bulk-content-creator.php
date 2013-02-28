@@ -204,7 +204,9 @@ class VE_Content_Creator {
             });
 
             $('.ve_rm').live('click', function(){
-              $(this).parent().parent().remove();
+                if($('.ve_rm').length > 1) {
+                    $(this).parent().parent().remove();
+                }
             });
 
             $('#set_all').change( set_all );
