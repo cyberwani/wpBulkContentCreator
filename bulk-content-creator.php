@@ -4,7 +4,7 @@
  * Plugin Name: Bulk Content Creator
  * Plugin URI: https://github.com/luk3thomas/wpBulkContentCreator 
  * Description: Quickly create multiple posts, pages, or other custom post types from a single interface. Helpful for WordPress developers during the initial site setup.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: @luk3thomas
  * Author URI: https://twitter.com/luk3thomas
  * 
@@ -65,10 +65,12 @@ class VE_Content_Creator {
       foreach( $_POST['ve_post'] as $new ) {
         if(! empty($new['name'])) {
           $menu_order = $new['menu_order'] ? $new['menu_order'] : 0;
+          $post_parent = $new['post_parent'] ? $new['post_parent'] : 0;
             
           $params = array( 
             'post_type' => $new['type'],
             'post_title' => $new['name'],
+            'post_parent' => $post_parent,
             'menu_order' => $menu_order,
             'post_status' => 'publish',
             'post_content' => $new['content']
@@ -122,14 +124,16 @@ class VE_Content_Creator {
             <td>Post Type</td>
             <td>Content</td>
             <td>Thumbnail ID</td>
+            <td>Post Parent ID</td>
             <td>Menu Order</td>
         </thead>
         <tbody>
           <tr>
             <td><input class="widefat" type="text" name="ve_post[post_1][name]" value=""  /></td>
-            <td><select class="widefat" name="ve_post[post_1][type]"><?php echo $this->pt_select() ?></select></td>
+            <td><select class="widefat pt-select" name="ve_post[post_1][type]"><?php echo $this->pt_select() ?></select></td>
             <td><textarea class="widefat" name="ve_post[post_1][content]"></textarea></td>
             <td><input type="text" name="ve_post[post_1][thumbnail]" value="" size="2" /></td>
+            <td><input type="text" name="ve_post[post_1][post_parent]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][menu_order]" value="" size="2" /></td>
             <td><span class="button secondary ve_add">Add</span></td>
             <td><span class="button secondary ve_rm">Remove</span></td>
@@ -138,35 +142,52 @@ class VE_Content_Creator {
       </table>      
 
       <input type="submit" value="Submit" class="button-primary" />
+      Change all to: <select id="set_all"><?php echo $this->pt_select() ?></select>
 
     </form>
     <script type="text/javascript">
       jQuery(document).ready(function($){
-        function ve_renumber() {
-          var start = 1;
-          $('.ve_table tbody tr').each(function(i, el){
+        (function(){
 
-            var repl = 'post_' + start ;
-            
-            $(this).find('input, select, textarea').each(function(i, el){
+            function ve_renumber() {
+              var start = 1;
+              $('.ve_table tbody tr').each(function(i, el){
 
-              var name = $(this).attr('name'),
-                  n    = name.replace(/post_[0-9]+/, repl) ;
+                var repl = 'post_' + start ;
+                
+                $(this).find('input, select, textarea').each(function(i, el){
 
-              $(this).attr('name', n);
+                  var name = $(this).attr('name'),
+                      n    = name.replace(/post_[0-9]+/, repl) ;
 
+                  $(this).attr('name', n);
+
+                });
+
+                start += 1;
+              });
+            }
+
+            function set_all() {
+                var $sel = $(this),
+                    val = $sel.val() ;
+
+                $('.pt-select').val( val );
+            }
+
+            $('.ve_add').live('click', function() {
+              $('.ve_table tbody').append('<tr>' + $('.ve_table tbody tr').slice(-1).html() + '</tr>');
+              ve_renumber();
             });
 
-            start += 1;
-          });
-        }
-        $('.ve_add').live('click', function(){
-          $('.ve_table tbody').append('<tr>' + $('.ve_table tbody tr').slice(-1).html() + '</tr>');
-          ve_renumber();
-        });
-        $('.ve_rm').live('click', function(){
-          $(this).parent().parent().remove();
-        });
+            $('.ve_rm').live('click', function(){
+              $(this).parent().parent().remove();
+            });
+
+            $('#set_all').change( set_all );
+
+        })(this.jQuery);
+
       });
     </script>
     <?php
