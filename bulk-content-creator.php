@@ -59,6 +59,25 @@ class VE_Content_Creator {
 
   }
   
+  function status_select() {
+
+    $types = array(
+        "publish" => "Published" ,
+        "pending" => "Pending Review" ,
+        "draft" => "Draft" ,
+    );
+    $out = '';
+
+    foreach( $types as $k => $v ) {
+
+        $out .= '<option value="' . $k . '">' . $v . '</option>';
+
+    }
+
+    return $out;
+
+  }
+  
   function show_page() {
 
     if( isset($_POST['ve_set']) && $_POST['ve_set']=='set' ){
@@ -72,8 +91,8 @@ class VE_Content_Creator {
             'post_title' => $new['name'],
             'post_parent' => $post_parent,
             'menu_order' => $menu_order,
-            'post_status' => 'publish',
-            'post_content' => $new['content']
+            'post_status' => $new['post_status'],
+            'post_content' => $new['content'],
           );
           
           global $wpdb;
@@ -126,6 +145,7 @@ class VE_Content_Creator {
             <td>Thumbnail ID</td>
             <td>Post Parent ID</td>
             <td>Menu Order</td>
+            <td>Post Status</td>
         </thead>
         <tbody>
           <tr>
@@ -135,14 +155,17 @@ class VE_Content_Creator {
             <td><input type="text" name="ve_post[post_1][thumbnail]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][post_parent]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][menu_order]" value="" size="2" /></td>
-            <td><span class="button secondary ve_add">Add</span></td>
+            <td><select class="widefat pt-select" name="ve_post[post_1][post_status]"><?php echo $this->status_select() ?></select></td>
             <td><span class="button secondary ve_rm">Remove</span></td>
           </tr>
         </tbody>
       </table>      
 
-      <input type="submit" value="Submit" class="button-primary" />
-      Change all to: <select id="set_all"><?php echo $this->pt_select() ?></select>
+      <p> <span class="button secondary ve_add">+ Add Row</span> </p>
+
+      Change post type of all to : <select id="set_all"><?php echo $this->pt_select() ?></select>
+
+      <p> <input type="submit" value="Submit" class="button-primary" /> </p>
 
     </form>
     <script type="text/javascript">
