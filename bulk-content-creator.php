@@ -39,7 +39,7 @@ class VE_Content_Creator {
 
   function create_page() {
 
-    add_options_page('Bulk Content Creator' , 'Bulk Content Creator' , 'manage_options' , $this->slug , array($this, 'show_page'));
+    add_management_page('Bulk Content Creator' , 'Bulk Content Creator' , 'manage_options' , $this->slug , array($this, 'show_page'));
 
   }
 
@@ -59,9 +59,29 @@ class VE_Content_Creator {
 
   }
   
+  function status_select() {
+
+    $types = array(
+        "publish" => "Published" ,
+        "pending" => "Pending Review" ,
+        "draft" => "Draft" ,
+    );
+    $out = '';
+
+    foreach( $types as $k => $v ) {
+
+        $out .= '<option value="' . $k . '">' . $v . '</option>';
+
+    }
+
+    return $out;
+
+  }
+  
   function show_page() {
 
     if( isset($_POST['ve_set']) && $_POST['ve_set']=='set' ){
+      echo "<div id='message' class='updated'>";
       foreach( $_POST['ve_post'] as $new ) {
         if(! empty($new['name'])) {
           $menu_order = $new['menu_order'] ? $new['menu_order'] : 0;
@@ -72,8 +92,8 @@ class VE_Content_Creator {
             'post_title' => $new['name'],
             'post_parent' => $post_parent,
             'menu_order' => $menu_order,
-            'post_status' => 'publish',
-            'post_content' => $new['content']
+            'post_status' => $new['post_status'],
+            'post_content' => $new['content'],
           );
           
           global $wpdb;
@@ -83,39 +103,37 @@ class VE_Content_Creator {
           if($new_id && ! empty($new['thumbnail'])) {
             update_post_meta($new_id, '_thumbnail_id', $new['thumbnail']);
             $id = wp_update_post(array('ID' => $new['thumbnail'], 'post_parent' => $new_id), true);
-            print_r( $id );
-            if($id) {
-              echo 'true:' . $id;
-            } else {
-              echo 'false';
-              print_r( $new );
-              print_r( $new_id );
-            }
           }
 
           if($new_id) {
-            echo 'Created new ' . $new['event'] . ':' . $new['name'] . '';
+              printf(' <p> Added new %s: <a href="%s">%s</a> </p> '
+              , $new["type"]
+              , get_edit_post_link($new_id)
+              , $new["name"]
+              );
           }
 
-
         }
-        echo '<br>';
 
       }
+      echo "</div>";
       //form submitted
         }
     ?>
     <style>
       .ve_table {
-        width:75%;
+        width:100%;
       }
       .ve_table td {
         vertical-align:top;
       }
+      #message {
+        margin-left:0;
+      }
     </style>
     <h1>Create Content</h2>
-    <h3>Inputh the items below</h3>
-    <form action="<?php bloginfo('wpurl') ?>/wp-admin/options-general.php?page=<?php echo $this->slug ?>" method="post">
+    <h3>Input the items below</h3>
+    <form action="<?php bloginfo('wpurl') ?>/wp-admin/tools.php?page=<?php echo $this->slug ?>" method="post">
       <input type="hidden" name="ve_set" value="set" />
       <table class="ve_table">
         <thead>
@@ -126,6 +144,7 @@ class VE_Content_Creator {
             <td>Thumbnail ID</td>
             <td>Post Parent ID</td>
             <td>Menu Order</td>
+            <td>Post Status</td>
         </thead>
         <tbody>
           <tr>
@@ -135,14 +154,17 @@ class VE_Content_Creator {
             <td><input type="text" name="ve_post[post_1][thumbnail]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][post_parent]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][menu_order]" value="" size="2" /></td>
-            <td><span class="button secondary ve_add">Add</span></td>
+            <td><select class="widefat pt-select" name="ve_post[post_1][post_status]"><?php echo $this->status_select() ?></select></td>
             <td><span class="button secondary ve_rm">Remove</span></td>
           </tr>
         </tbody>
       </table>      
 
-      <input type="submit" value="Submit" class="button-primary" />
-      Change all to: <select id="set_all"><?php echo $this->pt_select() ?></select>
+      <p> <span class="button secondary ve_add">+ Add Row</span> </p>
+
+      Change post type of all posts to : <select id="set_all"><?php echo $this->pt_select() ?></select>
+
+      <p> <input type="submit" value="Submit" class="button-primary" /> </p>
 
     </form>
     <script type="text/javascript">
@@ -181,7 +203,9 @@ class VE_Content_Creator {
             });
 
             $('.ve_rm').live('click', function(){
-              $(this).parent().parent().remove();
+                if($('.ve_rm').length > 1) {
+                    $(this).parent().parent().remove();
+                }
             });
 
             $('#set_all').change( set_all );
