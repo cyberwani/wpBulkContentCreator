@@ -163,7 +163,7 @@ class VE_Content_Creator {
 
       <p> <span class="button secondary ve_add">+ Add Row</span> </p>
 
-      Change post type of all to : <select id="set_all"><?php echo $this->pt_select() ?></select>
+      Change post type of all posts to : <select id="set_all"><?php echo $this->pt_select() ?></select>
 
       <p> <input type="submit" value="Submit" class="button-primary" /> </p>
 
