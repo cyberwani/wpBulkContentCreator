@@ -126,7 +126,7 @@ class VE_Content_Creator {
     ?>
     <style>
       .ve_table {
-        width:75%;
+        width:100%;
       }
       .ve_table td {
         vertical-align:top;
