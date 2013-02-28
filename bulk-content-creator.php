@@ -39,7 +39,7 @@ class VE_Content_Creator {
 
   function create_page() {
 
-    add_options_page('Bulk Content Creator' , 'Bulk Content Creator' , 'manage_options' , $this->slug , array($this, 'show_page'));
+    add_management_page('Bulk Content Creator' , 'Bulk Content Creator' , 'manage_options' , $this->slug , array($this, 'show_page'));
 
   }
 
@@ -114,8 +114,8 @@ class VE_Content_Creator {
       }
     </style>
     <h1>Create Content</h2>
-    <h3>Inputh the items below</h3>
-    <form action="<?php bloginfo('wpurl') ?>/wp-admin/options-general.php?page=<?php echo $this->slug ?>" method="post">
+    <h3>Input the items below</h3>
+    <form action="<?php bloginfo('wpurl') ?>/wp-admin/tools.php?page=<?php echo $this->slug ?>" method="post">
       <input type="hidden" name="ve_set" value="set" />
       <table class="ve_table">
         <thead>
