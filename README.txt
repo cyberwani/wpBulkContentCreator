@@ -1,7 +1,7 @@
 === Bulk Content Creator ===
 Contributors: luk3thomas
 Tags: setup, utiliy, productivity, developer, mass pages, mass posts, mass content, create posts mass, batch create
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires at least: 3.0.0
 Tested up to: 3.5
 License: GPLv2 or later

@@ -4,7 +4,7 @@
  * Plugin Name: Bulk Content Creator
  * Plugin URI: https://github.com/luk3thomas/wpBulkContentCreator 
  * Description: Quickly create multiple posts, pages, or other custom post types from a single interface. Helpful for WordPress developers during the initial site setup.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: @luk3thomas
  * Author URI: https://twitter.com/luk3thomas
  * 
