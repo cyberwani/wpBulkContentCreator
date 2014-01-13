@@ -154,7 +154,7 @@ class VE_Content_Creator {
             <td><input type="text" name="ve_post[post_1][thumbnail]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][post_parent]" value="" size="2" /></td>
             <td><input type="text" name="ve_post[post_1][menu_order]" value="" size="2" /></td>
-            <td><select class="widefat pt-select" name="ve_post[post_1][post_status]"><?php echo $this->status_select() ?></select></td>
+            <td><select class="widefat" name="ve_post[post_1][post_status]"><?php echo $this->status_select() ?></select></td>
             <td><span class="button secondary ve_rm">Remove</span></td>
           </tr>
         </tbody>
